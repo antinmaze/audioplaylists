@@ -1,0 +1,9 @@
+
+.DS_Store
+cmds.sh
+dwback/clean-migrations.sh
+*.pyc
+*.pem
+dwback/dwback/dwback/settings/prod.py
+dwback/dwback/oauth/spotify_trial.py
+dwback/dwback/dwback/settings/dev.py
