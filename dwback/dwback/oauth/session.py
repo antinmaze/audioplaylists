@@ -5,10 +5,12 @@ import requests
 from requests.auth import HTTPBasicAuth
 from requests_oauthlib import OAuth2Session, TokenUpdated
 #from oauthlib.oauth2 import TokenExpiredError
-from oauthlib.oauth2.rfc6749.errors import InvalidGrantError
+from oauthlib.oauth2.rfc6749.errors import InvalidGrantError, InvalidClientError
 #from django.urls import include, path
 from django.core.exceptions import PermissionDenied, SuspiciousOperation
 import logging
+from django.shortcuts import redirect
+from django.conf import settings
 
 """
 Vous pouvez supprimer cet accès à tout moment à l'adresse spotify.com/account.
@@ -109,8 +111,10 @@ def ressourceRequest(_request, resource_url, _client_id, _token_url):
     # See https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html?highlight=TokenUpdated#second-define-automatic-token-refresh-automatic-but-update-manually
     ### TODO implement automatic_refresh(): see https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html?highlight=TokenUpdated#third-recommended-define-automatic-token-refresh-and-update   
     except TokenUpdated as e:
-        # Save the refreshed token into the session  
+        # Save the refreshed token into the session 
         saveSession(_request, token=e.token)
+    except InvalidClientError as e:
+        return redirect(settings.OAUTH_ENDPOINT)
     return api.content
 
 

@@ -5,9 +5,10 @@
 {% block content %}
 
 <div class="bg-light p-5 rounded">
-  <h1>Navbar example</h1>
-  <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
-
+<!-- 
+  <h1>Playlists</h1>
+  <p class="lead"></p>
+-->
   <section class="contact-section">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5">
@@ -23,7 +24,8 @@
                                 <a class="btn btn-lg btn-success" role="button">Spotify Connected</a>                                
                                 spotify id: {{ spotify_id }}
                             {% else %}
-                                <a class="btn btn-lg btn-primary" href="https://localhost:8000/oauth/" role="button">Spotify Connexion</a>                                
+                                <a class="btn btn-lg btn-primary" href="https://localhost:8000/oauth/" role="button">
+                                    Spotify Connexion</a>                                
                             {% endif %}
                         </div>
                     </div>
@@ -37,11 +39,13 @@
                         <h5 class="text-uppercase m-0">Get your playlists from the platform</h5>
                         <hr class="my-4 mx-auto" />
                         <div class="small text-black-50">
-                            {% if spotify_playlist_total > 0 %}
-                                <a class="btn btn-lg btn-success" role="button">{{ spotify_playlist_total }} Playlists</a>                                
-                                spotify id: {{ spotify_id }}
+                            {% if spotify_id %}
+                                <a class="btn btn-lg btn-primary" 
+                                href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&offset={{ spotify_nextoffset }}" 
+                                role="button">Get Playlists</a>                                
                             {% else %}
-                                <a class="btn btn-lg btn-primary" href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&offset={{ spotify_offset }}" role="button">Get Playlists</a>                                
+                                <a class="btn btn-lg btn-primary" 
+                                href="" role="button">Not Connected</a>                                
                             {% endif %}
                         </div>
                     </div>
@@ -68,25 +72,47 @@
                 </div>
             </div>
         </div>
-        <div class="row gx-4 gx-lg-5">
-            <center>
-            </br>
-                <ul>
-                    {% for playlist in playlists %}
-                        <li><img src="{{ playlist.image_url }}" alt="{{ playlist.description }}"> - {{ playlist.name }}</li>
-                    {% empty %}
-                        <li>No playlist yet.</li>
-                    {% endfor %}
-                </ul>
-            </center>    
-        </div>    
-        <div class="social d-flex justify-content-center">
-            <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-            <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-            <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
+
+
+        <div class="row">  
+            <div class="col-sm">
+                <div class="row">
+                <div class="col-sm">
+
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" 
+                            href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&offset={{ spotify_prevoffset }}">
+                            Previous</a></li>
+                        <li class="page-item"><a class="page-link" 
+                            href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&offset={{ spotify_nextoffset }}">
+                            Next</a></li>
+                    </ul>
+
+                    <div class="list-group">
+                        {% for playlist in playlists %}
+                        <a href="https://localhost:8000/playlist/spfy-tracks/?playlist_id={{ playlist.id }}" class="list-group-item list-group-item-action">
+                            <div class="row" >
+                                <div class="col-sm-4">
+                                    <img class="img-thumbnail" src="{{ playlist.image_url }}" alt="{{ playlist.description }}">
+                                </div>  
+                                <div class="col-sm-8">
+                                    <h6>{{ playlist.name }}</h6>
+                                    <p>NB Tracks: {{ playlist.tracks_total }}</p>
+                                </div>
+                            </div>
+                        </a>
+                        {% empty %}
+                        No playlist yet.
+                        {% endfor %}
+                    </div>                    
+                </div>
+                <div class="col-sm">col-sm</div>
+                <div class="col-sm">col-sm</div>
+            </div>
         </div>
+
+        
     </div>
   </section>
 </div>
-
 {% endblock %}

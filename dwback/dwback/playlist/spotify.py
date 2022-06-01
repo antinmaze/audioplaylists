@@ -33,11 +33,12 @@ class Item(object):
     id = ''
     image_url = ''
     owner_name = ''
+    tracks_url = ''
     tracks_total = ''
 
     #class default constructor
     def __init__(self,name,description, external_urls, href, id, image_url,
-    owner_name, tracks_total):
+    owner_name, tracks_url, tracks_total):
 
       self.name = name
       self.description = description
@@ -46,6 +47,7 @@ class Item(object):
       self.id = id
       self.image_url = image_url
       self.owner_name = owner_name
+      self.tracks_url = tracks_url
       self.tracks_total = tracks_total
 
 
