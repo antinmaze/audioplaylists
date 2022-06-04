@@ -23,7 +23,25 @@ from typing import List
       "uri" : "spotify:playlist:2JzV6Psnc0PIG1V2cFqgFC" 
     },
 """
-class Item(object):
+
+class Track(object):
+
+    external_id = '' #isrc
+
+
+
+    name = ''
+    description = ''
+    external_urls = ''
+    href = ''
+    id = ''
+    image_url = ''
+    owner_name = ''
+    tracks_url = ''
+    tracks_total = ''
+
+
+class Playlist(object):
     
     #attributes
     name = ''
@@ -51,6 +69,6 @@ class Item(object):
       self.tracks_total = tracks_total
 
 
-class Playlist(object):
-    def __init__(self, items: List[Item]):
-        self.items = items
+#class Playlist(object):
+#    def __init__(self, items: List[Item]):
+#        self.items = items

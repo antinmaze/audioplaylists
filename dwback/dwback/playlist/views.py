@@ -9,7 +9,7 @@ from collections import namedtuple
 from typing import List
 from urllib.parse import parse_qs, urlparse
 
-from .spotify import Item
+from .spotify import Playlist
 
 def index(request):
     #params = kwargs.pop('params', {})
@@ -77,7 +77,7 @@ def spotifyGetUserPlaylists(request):
     playlists = [] 
     # Iterating through the json list
     for item in data_json["items"]:
-        playlists.append(Item(
+        playlists.append(Playlist(
             item['name'],
             item['description'],
             item['external_urls']['spotify'],
