@@ -104,7 +104,7 @@ def getOffsetAndLimit(url):
 """ ex: /playlist/spfy-tracks/?<playlist_id> """
 def spotifyGetPlaylistTracks(request):
     #get the spotify user attribute efrom the path ELSE get the user ID from session used during the AUth 
-    #spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, request.session['spotify_id'])
+    spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, request.session['spotify_id'])
     #get the od of the playlist settings.ATTRIB_SPOTIFY_PLAYLIST_ID
     spotify_playlist_id = request.GET.get(settings.ATTRIB_SPOTIFY_PLAYLIST_ID, 0)
 
@@ -116,7 +116,7 @@ def spotifyGetPlaylistTracks(request):
     data_api = session.ressourceRequest(request, resource_url, settings.SPOTIFY_CLIENT_ID, settings.SPOTIFY_TOKEN_URL)
     data_json = json.loads(data_api.decode('utf-8'))
     #data_json = json.loads(data_api)
-    return HttpResponse(str(data_json))
+    #return HttpResponse(str(data_json))
     next_offset = 0
     prev_offset = 0
     ctx = getOffsetAndLimit(data_json["next"])
@@ -143,18 +143,15 @@ def spotifyGetPlaylistTracks(request):
     # Iterating through the json list
     for item in data_json["items"]:
         tracks.append(Track(
-            item['name'],
-            item['artists'][0]['name'],
-            item['external_urls']['spotify'],
-            item['external_urls']['spotify'],
-            item['href'],
-            item['id'],
-            item['images'][0]['url'],
-            item['owner']['display_name'],
-            item['tracks']['href'],
-            item['tracks']['total']
+            item['name'], #name
+            item['artists'][0]['name'], #artist_name
+            item['external_ids']['isrc'], #external_id
+            item['external_urls']['spotify'], #external_urls
+            item['href'], #href
+            item['id'], #id
+            item['images'][0]['url'], #image_url
         ))
     context = {}
-    context.update({'playlists': playlists, 'spotify_id': spotify_id,
+    context.update({'tracks': tracks, 'spotify_id': spotify_id,
     'spotify_nextoffset' : next_offset, 'spotify_prevoffset' : prev_offset})
     return render(request, 'playlist/index.html', context)
