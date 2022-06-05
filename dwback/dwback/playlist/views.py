@@ -1,15 +1,14 @@
-from site import venv
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 from oauth import session
 import json
 #from jsonpath_ng import jsonpath, parser
-from collections import namedtuple
+#from collections import namedtuple
 from typing import List
 from urllib.parse import parse_qs, urlparse
 
-from .spotify import Playlist
+from .spotify import Playlist, Track
 
 def index(request):
     #params = kwargs.pop('params', {})
@@ -127,3 +126,35 @@ def spotifyGetPlaylistTracks(request):
     if ctx:
         prev_offset = ctx['offset'][0]
 
+    #Get tracks data
+    # creating tracks       
+    tracks = [] 
+
+    """
+    name = '' #title
+    artist_name = '' #TODO implement multi artists
+    external_id = '' #isrc #TODO implement multi external_id
+    external_urls = ''  
+    href = ''
+    id = ''
+    image_url = '' #get the first image from the list
+    """
+
+    # Iterating through the json list
+    for item in data_json["items"]:
+        tracks.append(Track(
+            item['name'],
+            item['artists'][0]['name'],
+            item['external_urls']['spotify'],
+            item['external_urls']['spotify'],
+            item['href'],
+            item['id'],
+            item['images'][0]['url'],
+            item['owner']['display_name'],
+            item['tracks']['href'],
+            item['tracks']['total']
+        ))
+    context = {}
+    context.update({'playlists': playlists, 'spotify_id': spotify_id,
+    'spotify_nextoffset' : next_offset, 'spotify_prevoffset' : prev_offset})
+    return render(request, 'playlist/index.html', context)

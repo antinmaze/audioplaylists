@@ -1,46 +1,82 @@
-{ "href" : "https://api.spotify.com/v1/users/etanova/playlists?offset=0&limit=50",
-  "items" : [
-    
-    { "collaborative" : false, "description" : "NEW CHUNES + OLD JAMMERZ FOLLOW ON SPOTIFY // MERCH",
-      "external_urls" : { "spotify" : "https://open.spotify.com/playlist/2JzV6Psnc0PIG1V2cFqgFC" },
-      "href" : "https://api.spotify.com/v1/playlists/2JzV6Psnc0PIG1V2cFqgFC",
-      "id" : "2JzV6Psnc0PIG1V2cFqgFC",
-      "images" : [ { "height" : null, "url" : "https://i.scdn.co/image/ab67706c0000bebb16b33c4393bd8b9ab764b67f", "width" : null } ],
-      "name" : "HEALTH PRIMER",
-      "owner" : 
-        { "display_name" : "HEALTH", 
-          "external_urls" : { "spotify" : "https://open.spotify.com/user/healthnoise" },
-          "href" : "https://api.spotify.com/v1/users/healthnoise", "id" : "healthnoise", "type" : "user", "uri" : "spotify:user:healthnoise" 
-        },
-      "primary_color" : null, "public" : false, "snapshot_id" : "MTE0LGU5MmI0ZTY1ODZjZGQ4YjNiNDc5NGY3ZWUzNWYyNjMxYjkxZWI4NjE=",
-      "tracks" : 
-        { "href" : "https://api.spotify.com/v1/playlists/2JzV6Psnc0PIG1V2cFqgFC/tracks", "total" : 17 }, 
-      "type" : "playlist",
-      "uri" : "spotify:playlist:2JzV6Psnc0PIG1V2cFqgFC" 
-    },
-
-    { "collaborative" : false, "description" : "The birth of the blues, as it happened...", 
-      "external_urls" : { "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DWXbxDw7wBcIC" }, 
-      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DWXbxDw7wBcIC", 
-      "id" : "37i9dQZF1DWXbxDw7wBcIC", 
-      "images" : [ { "height" : null, "url" : "https://i.scdn.co/image/ab67706f0000000392a222dc05735f97ac35b6d9", "width" : null } ], 
-      "name" : "Scratchy Back Porch Blues", 
-      "owner" : 
-        { "display_name" : "Spotify", 
-          "external_urls" : { "spotify" : "https://open.spotify.com/user/spotify" }, 
-          "href" : "https://api.spotify.com/v1/users/spotify", "id" : "spotify", "type" : "user", "uri" : "spotify:user:spotify" 
-        }, 
-        "primary_color" : null, "public" : false, "snapshot_id" : "MTU2ODAxMzE4NCwwMDAwMDAxOTAwMDAwMTZkMTRkZTZkZjgwMDAwMDE2Y2Y2ODgzNDU2", 
-        "tracks" : 
-          { "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DWXbxDw7wBcIC/tracks", "total" : 50 }, 
-        "type" : "playlist", 
-        "uri" : "spotify:playlist:37i9dQZF1DWXbxDw7wBcIC" 
-    },
-
-  ], 
-  "limit" : 50, 
-  "next" : "https://api.spotify.com/v1/users/etanova/playlists?offset=50&limit=50", 
-  "offset" : 0,
-  "previous" : null, 
-  "total" : 179 
+{
+	"href":"https://api.spotify.com/v1/users/etanova/playlists?offset=0&limit=50",
+	"items":[
+		{
+			"collaborative":false,
+			"description":"NEW CHUNES + OLD JAMMERZ FOLLOW ON SPOTIFY // MERCH",
+			"external_urls":{
+				"spotify":"https://open.spotify.com/playlist/2JzV6Psnc0PIG1V2cFqgFC"
+			},
+			"href":"https://api.spotify.com/v1/playlists/2JzV6Psnc0PIG1V2cFqgFC",
+			"id":"2JzV6Psnc0PIG1V2cFqgFC",
+			"images":[
+				{
+					"height":null,
+					"url":"https://i.scdn.co/image/ab67706c0000bebb16b33c4393bd8b9ab764b67f",
+					"width":null
+				}
+			],
+			"name":"HEALTH PRIMER",
+			"owner":{
+				"display_name":"HEALTH",
+				"external_urls":{
+					"spotify":"https://open.spotify.com/user/healthnoise"
+				},
+				"href":"https://api.spotify.com/v1/users/healthnoise",
+				"id":"healthnoise",
+				"type":"user",
+				"uri":"spotify:user:healthnoise"
+			},
+			"primary_color":null,
+			"public":false,
+			"snapshot_id":"MTE0LGU5MmI0ZTY1ODZjZGQ4YjNiNDc5NGY3ZWUzNWYyNjMxYjkxZWI4NjE=",
+			"tracks":{
+				"href":"https://api.spotify.com/v1/playlists/2JzV6Psnc0PIG1V2cFqgFC/tracks",
+				"total":17
+			},
+			"type":"playlist",
+			"uri":"spotify:playlist:2JzV6Psnc0PIG1V2cFqgFC"
+		},
+		{
+			"collaborative":false,
+			"description":"The birth of the blues, as it happened...",
+			"external_urls":{
+				"spotify":"https://open.spotify.com/playlist/37i9dQZF1DWXbxDw7wBcIC"
+			},
+			"href":"https://api.spotify.com/v1/playlists/37i9dQZF1DWXbxDw7wBcIC",
+			"id":"37i9dQZF1DWXbxDw7wBcIC",
+			"images":[
+				{
+					"height":null,
+					"url":"https://i.scdn.co/image/ab67706f0000000392a222dc05735f97ac35b6d9",
+					"width":null
+				}
+			],
+			"name":"Scratchy Back Porch Blues",
+			"owner":{
+				"display_name":"Spotify",
+				"external_urls":{
+					"spotify":"https://open.spotify.com/user/spotify"
+				},
+				"href":"https://api.spotify.com/v1/users/spotify",
+				"id":"spotify",
+				"type":"user",
+				"uri":"spotify:user:spotify"
+			},
+			"primary_color":null,
+			"public":false,
+			"snapshot_id":"MTU2ODAxMzE4NCwwMDAwMDAxOTAwMDAwMTZkMTRkZTZkZjgwMDAwMDE2Y2Y2ODgzNDU2",
+			"tracks":{
+				"href":"https://api.spotify.com/v1/playlists/37i9dQZF1DWXbxDw7wBcIC/tracks",
+				"total":50
+			},
+			"type":"playlist",
+			"uri":"spotify:playlist:37i9dQZF1DWXbxDw7wBcIC"
+		}
+	],
+	"limit":50,
+	"next":"https://api.spotify.com/v1/users/etanova/playlists?offset=50&limit=50",
+	"offset":0,
+	"previous":null,
+	"total":179
 }
