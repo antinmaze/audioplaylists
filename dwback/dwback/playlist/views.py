@@ -15,7 +15,7 @@ def index(request):
     #get the spotify user attribute efrom the path ELSE get the user ID from session used during the AUth 
     spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, '')
     #get the desired offset and the limit will be set to settings.SPOTIFY_PLAYLISTS_LIMIT
-    spotify_nextoffset = request.GET.get(settings.ATTRIB_SPOTIFY_OFFSET, 0)
+    spotify_nextoffset = request.GET.get(settings.ATTRIB_SPOTIFY_PLAYLISTS_OFFSET, 0)
     #set contextext
     context = {}
     context['spotify_id']=  spotify_id
@@ -48,13 +48,13 @@ def vote(request, question_id):
 def spotifyGetUserPlaylists(request):
     #get the spotify user attribute efrom the path ELSE get the user ID from session used during the AUth 
     spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, request.session['spotify_id'])
-    #get the desired offset and the limit will be set to settings.SPOTIFY_PLAYLISTS_LIMIT
-    spotify_offset = request.GET.get(settings.ATTRIB_SPOTIFY_OFFSET, 0)
+    #get the desired offset and the limit will be set to settings.ATTRIB_SPOTIFY_PLAYLISTS_OFFSET
+    spotify_offset = request.GET.get(settings.ATTRIB_SPOTIFY_PLAYLISTS_OFFSET, 0)
 
     #SPOTIFY_PLAYLISTS_PATH = '/playlists?offset=0&limit=50'
     #build the URL  https://api.spotify.com/v1/users/user_id/playlists?offset=0&limit=50'
     resource_url = (settings.SPOTIFY_USER_PATH + str(spotify_id) + settings.SPOTIFY_PLAYLISTS_PATH +
-    settings.ATTRIB_SPOTIFY_OFFSET+'='+str(spotify_offset)+'&'+settings.ATTRIB_SPOTIFY_LIMIT +
+    settings.ATTRIB_SPOTIFY_PLAYLISTS_OFFSET+'='+str(spotify_offset)+'&'+settings.ATTRIB_SPOTIFY_PLAYLISTS_LIMIT +
     str(settings.SPOTIFY_PLAYLISTS_LIMIT))
 
     #execute the request API
@@ -116,7 +116,7 @@ def spotifyGetPlaylistTracks(request):
     data_api = session.ressourceRequest(request, resource_url, settings.SPOTIFY_CLIENT_ID, settings.SPOTIFY_TOKEN_URL)
     data_json = json.loads(data_api.decode('utf-8'))
     #data_json = json.loads(data_api)
-    #return HttpResponse(str(data_json))
+    return HttpResponse(str(data_json))
     next_offset = 0
     prev_offset = 0
     ctx = getOffsetAndLimit(data_json["next"])
