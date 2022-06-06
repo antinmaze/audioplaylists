@@ -41,7 +41,7 @@
                         <div class="small text-black-50">
                             {% if spotify_id %}
                                 <a class="btn btn-lg btn-primary" 
-                                href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&offset={{ spotify_nextoffset }}" 
+                                href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&playlist_offset=0" 
                                 role="button">Get Playlists</a>                                
                             {% else %}
                                 <a class="btn btn-lg btn-primary" 
@@ -78,35 +78,11 @@
             <div class="col-sm">
                 <div class="row">
                 <div class="col-sm">
-
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" 
-                            href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&offset={{ spotify_prevoffset }}">
-                            Previous</a></li>
-                        <li class="page-item"><a class="page-link" 
-                            href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&offset={{ spotify_nextoffset }}">
-                            Next</a></li>
-                    </ul>
-
-                    <div class="list-group">
-                        {% for playlist in playlists %}
-                        <a href="https://localhost:8000/playlist/spfy-tracks/?playlist_id={{ playlist.id }}" class="list-group-item list-group-item-action">
-                            <div class="row" >
-                                <div class="col-sm-4">
-                                    <img class="img-thumbnail" src="{{ playlist.image_url }}" alt="{{ playlist.description }}">
-                                </div>  
-                                <div class="col-sm-8">
-                                    <h6>{{ playlist.name }}</h6>
-                                    <p>NB Tracks: {{ playlist.tracks_total }}</p>
-                                </div>
-                            </div>
-                        </a>
-                        {% empty %}
-                        No playlist yet.
-                        {% endfor %}
-                    </div>                    
+                    {% include "playlist/playlists.html" %}
                 </div>
-                <div class="col-sm">col-sm</div>
+                <div class="col-sm">
+                    {% include "playlist/tracks.html" %}
+                </div>
                 <div class="col-sm">col-sm</div>
             </div>
         </div>

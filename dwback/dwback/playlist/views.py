@@ -15,23 +15,12 @@ def index(request):
     #get the spotify user attribute efrom the path ELSE get the user ID from session used during the AUth 
     spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, '')
     #get the desired offset and the limit will be set to settings.SPOTIFY_PLAYLISTS_LIMIT
-    spotify_nextoffset = request.GET.get(settings.ATTRIB_SPOTIFY_PLAYLISTS_OFFSET, 0)
+    nextoffset = request.GET.get(settings.ATTRIB_SPOTIFY_PLAYLISTS_OFFSET, 0)
     #set contextext
     context = {}
     context['spotify_id']=  spotify_id
-    context['spotify_nextoffset']=  spotify_nextoffset
+    context['playlist_nxtoffset']=  nextoffset
     return render(request, 'playlist/index.html', context)
-
-
-def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
-
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
-
-def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
 
 
 #GET https://localhost:8000/playlist/spfy-playlists/?spotify_id=etanova&offset=50
@@ -54,7 +43,7 @@ def spotifyGetUserPlaylists(request):
     #SPOTIFY_PLAYLISTS_PATH = '/playlists?offset=0&limit=50'
     #build the URL  https://api.spotify.com/v1/users/user_id/playlists?offset=0&limit=50'
     resource_url = (settings.SPOTIFY_USER_PATH + str(spotify_id) + settings.SPOTIFY_PLAYLISTS_PATH +
-    settings.ATTRIB_SPOTIFY_PLAYLISTS_OFFSET+'='+str(spotify_offset)+'&'+settings.ATTRIB_SPOTIFY_PLAYLISTS_LIMIT +
+    settings.SPOTIFY_OFFSET+'='+str(spotify_offset)+'&'+settings.SPOTIFY_LIMIT+'='+
     str(settings.SPOTIFY_PLAYLISTS_LIMIT))
 
     #execute the request API
@@ -66,10 +55,10 @@ def spotifyGetUserPlaylists(request):
     prev_offset = 0
     ctx = getOffsetAndLimit(data_json["next"])
     if ctx:
-        next_offset = ctx['offset'][0]
+        next_offset = 0 if  ctx['offset'][0]== None else ctx['offset'][0] 
     ctx = getOffsetAndLimit(data_json["previous"])
     if ctx:
-        prev_offset = ctx['offset'][0]
+        prev_offset = 0 if  ctx['offset'][0]== None else ctx['offset'][0]
 
     #Get playlist data
     # creating playslists       
@@ -89,7 +78,7 @@ def spotifyGetUserPlaylists(request):
         ))
     context = {}
     context.update({'playlists': playlists, 'spotify_id': spotify_id,
-    'spotify_nextoffset' : next_offset, 'spotify_prevoffset' : prev_offset})
+    'playlist_nxtoffset' : next_offset, 'playlist_prvoffset' : prev_offset})
     return render(request, 'playlist/index.html', context)
 
 
@@ -101,6 +90,7 @@ def spotifyGetUserPlaylists(request):
 def getOffsetAndLimit(url):
     return parse_qs(urlparse(url).query)
 
+
 """ ex: /playlist/spfy-tracks/?<playlist_id> """
 def spotifyGetPlaylistTracks(request):
     #get the spotify user attribute efrom the path ELSE get the user ID from session used during the AUth 
@@ -109,49 +99,39 @@ def spotifyGetPlaylistTracks(request):
     spotify_playlist_id = request.GET.get(settings.ATTRIB_SPOTIFY_PLAYLIST_ID, 0)
 
     #SPOTIFY_PLAYLISTS_PATH = '/playlists?offset=0&limit=50'
-    #build the URL  "https://api.spotify.com/v1/playlists/2JzV6Psnc0PIG1V2cFqgFC/tracks
+    #build the URL  
+    # "https://api.spotify.com/v1/playlists/2JzV6Psnc0PIG1V2cFqgFC/tracks
     resource_url = settings.SPOTIFY_PLAYLISTS_URL + str(spotify_playlist_id) + settings.SPOTIFY_TRACKS
 
     #execute the request API
     data_api = session.ressourceRequest(request, resource_url, settings.SPOTIFY_CLIENT_ID, settings.SPOTIFY_TOKEN_URL)
     data_json = json.loads(data_api.decode('utf-8'))
     #data_json = json.loads(data_api)
-    return HttpResponse(str(data_json))
+    #return HttpResponse(str(data_json))
     next_offset = 0
     prev_offset = 0
     ctx = getOffsetAndLimit(data_json["next"])
     if ctx:
-        next_offset = ctx['offset'][0]
+        next_offset = 0 if  ctx['offset'][0]== None else ctx['offset'][0] 
     ctx = getOffsetAndLimit(data_json["previous"])
     if ctx:
-        prev_offset = ctx['offset'][0]
+        prev_offset = 0 if  ctx['offset'][0]== None else ctx['offset'][0]
 
     #Get tracks data
     # creating tracks       
     tracks = [] 
-
-    """
-    name = '' #title
-    artist_name = '' #TODO implement multi artists
-    external_id = '' #isrc #TODO implement multi external_id
-    external_urls = ''  
-    href = ''
-    id = ''
-    image_url = '' #get the first image from the list
-    """
-
     # Iterating through the json list
     for item in data_json["items"]:
         tracks.append(Track(
-            item['name'], #name
-            item['artists'][0]['name'], #artist_name
-            item['external_ids']['isrc'], #external_id
-            item['external_urls']['spotify'], #external_urls
-            item['href'], #href
-            item['id'], #id
-            item['images'][0]['url'], #image_url
+            item['track']['name'], #name
+            item['track']['artists'][0]['name'], #artist_name
+            item['track']['external_ids']['isrc'], #external_id
+            item['track']['external_urls']['spotify'], #external_urls
+            item['track']['href'], #href
+            item['track']['id'], #id
+            item['track']['album']['images'][0]['url'] #image_url
         ))
     context = {}
     context.update({'tracks': tracks, 'spotify_id': spotify_id,
-    'spotify_nextoffset' : next_offset, 'spotify_prevoffset' : prev_offset})
+    'track_nxtoffset' : next_offset, 'track_prvoffset' : prev_offset})
     return render(request, 'playlist/index.html', context)

@@ -1,0 +1,27 @@
+{% if spotify_id %}
+<ul class="pagination">
+    <li class="page-item"><a class="page-link" 
+        href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&playlist_offset={{ playlist_prvoffset }}">
+        Previous</a></li>
+    <li class="page-item"><a class="page-link" 
+        href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&playlist_offset={{ playlist_nxtoffset }}">
+        Next</a></li>
+</ul>
+{% endif %}
+<div class="list-group">
+    {% for playlist in playlists %}
+    <a href="https://localhost:8000/playlist/spfy-tracks/?playlist_id={{ playlist.id }}" class="list-group-item list-group-item-action">
+        <div class="row" >
+            <div class="col-sm-4">
+                <img class="img-thumbnail" src="{{ playlist.image_url }}" alt="{{ playlist.description }}">
+            </div>  
+            <div class="col-sm-8">
+                <h6>{{ playlist.name }}</h6>
+                <p>NB Tracks: {{ playlist.tracks_total }}</p>
+            </div>
+        </div>
+    </a>
+    {% empty %}
+    No playlist yet.
+    {% endfor %}
+</div>                    
