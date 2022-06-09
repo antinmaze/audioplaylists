@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions', #Session
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework', #REST API
     'corsheaders', # CORS
     'requests_oauthlib', # OAUTH2
     "django_extensions", # Extension
