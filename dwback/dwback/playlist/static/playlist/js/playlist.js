@@ -5,7 +5,7 @@
  */
 
 /*
-    Return the TRacks for a specified playlist id
+    Return the Tracks for a specified Playlist id
 */
 async function getTracks(playlistid){
     const response = await fetch(
@@ -19,3 +19,19 @@ async function getTracks(playlistid){
     return await data.json();
 }
 
+async function renderTracks(playlistid){
+    let tracks = await getTracks(playlistid);
+    let html = '';
+    tracks.forEach(track => {
+        let htmlSegment = `<div class="track">
+                            <img src="${user.profileURL}" >
+                            <h2>${user.firstName} ${user.lastName}</h2>
+                            <div class="email"><a href="email:${user.email}">${user.email}</a></div>
+                        </div>`;
+
+        html += htmlSegment;
+    });
+
+    let container = document.querySelector('.container');
+    container.innerHTML = html;
+}   
