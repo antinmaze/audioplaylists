@@ -34,9 +34,10 @@ def index(request):
 ##    "previous": "https://api.spotify.com/v1/me/shows?offset=1&limit=1",
 ##    "total": 4 }
 ##    """
-def spotifyGetUserPlaylists(request):
-    #get the spotify user attribute efrom the path ELSE get the user ID from session used during the AUth 
-    spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, request.session['spotify_id'])
+def spotifyGetPlaylists(request):
+    #get the spotify user attributee from the path ELSE get the user ID from session used during the AUth 
+    #spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, request.session['spotify_id'])
+    spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, '')
     #get the desired offset and the limit will be set to settings.ATTRIB_SPOTIFY_PLAYLISTS_OFFSET
     spotify_offset = request.GET.get(settings.ATTRIB_SPOTIFY_PLAYLISTS_OFFSET, 0)
 
@@ -92,9 +93,10 @@ def getOffsetAndLimit(url):
 
 
 """ ex: /playlist/spfy-tracks/?<playlist_id> """
-def spotifyGetPlaylistTracks(request):
+def spotifyGetTracks(request):
     #get the spotify user attribute efrom the path ELSE get the user ID from session used during the AUth 
-    spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, request.session['spotify_id'])
+    #spotify_id = request.GET.get(settings.ATTRIB_SPOTIFY_ID, request.session['spotify_id'])
+
     #get the od of the playlist settings.ATTRIB_SPOTIFY_PLAYLIST_ID
     spotify_playlist_id = request.GET.get(settings.ATTRIB_SPOTIFY_PLAYLIST_ID, 0)
 
@@ -131,7 +133,19 @@ def spotifyGetPlaylistTracks(request):
             item['track']['id'], #id
             item['track']['album']['images'][0]['url'] #image_url
         ))
+    tracks_json = [json.dumps(track.__dict__) for track in tracks]
+    #return HttpResponse(str(tracks_json))
+    
     context = {}
-    context.update({'tracks': tracks, 'spotify_id': spotify_id,
+    context.update({'tracks': tracks_json,
     'track_nxtoffset' : next_offset, 'track_prvoffset' : prev_offset})
-    return render(request, 'playlist/index.html', context)
+    return HttpResponse(str(context))
+
+    #context.update({'tracks': tracks, 'spotify_id': spotify_id,
+    #'track_nxtoffset' : next_offset, 'track_prvoffset' : prev_offset})
+    #return HttpResponse(str(context))
+
+    #return render(request, 'playlist/index.html', context)
+    #return json.loads(context)
+    # Serializing json  
+    #return json.dumps(context, indent = 4)

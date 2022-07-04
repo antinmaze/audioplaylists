@@ -10,7 +10,10 @@
 {% endif %}
 <div class="list-group">
     {% for playlist in playlists %}
+    <a href="javascript:getTracks('{{ playlist.id }}')" class="list-group-item list-group-item-action">
+        <!--
     <a href="https://localhost:8000/playlist/spfy-tracks/?playlist_id={{ playlist.id }}" class="list-group-item list-group-item-action">
+    -->
         <div class="row" >
             <div class="col-sm-4">
                 <img class="img-thumbnail" src="{{ playlist.image_url }}" alt="{{ playlist.description }}">
