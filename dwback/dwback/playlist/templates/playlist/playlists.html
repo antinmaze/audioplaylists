@@ -8,7 +8,7 @@
         Next</a></li>
 </ul>
 {% endif %}
-<div class="list-group">
+<div class="list-group" id="playlists">
     {% for playlist in playlists %}
     <a href="javascript:getTracks('{{ playlist.id }}')" class="list-group-item list-group-item-action">
         <!--
@@ -25,6 +25,6 @@
         </div>
     </a>
     {% empty %}
-    No playlist yet.
+    No playlists yet.
     {% endfor %}
 </div>                    

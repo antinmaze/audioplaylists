@@ -7,6 +7,7 @@ import json
 #from collections import namedtuple
 from typing import List
 from urllib.parse import parse_qs, urlparse
+from django.http import JsonResponse
 
 from .spotify import Playlist, Track
 
@@ -134,18 +135,8 @@ def spotifyGetTracks(request):
             item['track']['album']['images'][0]['url'] #image_url
         ))
     tracks_json = [json.dumps(track.__dict__) for track in tracks]
-    #return HttpResponse(str(tracks_json))
     
     context = {}
     context.update({'tracks': tracks_json,
     'track_nxtoffset' : next_offset, 'track_prvoffset' : prev_offset})
-    return HttpResponse(str(context))
-
-    #context.update({'tracks': tracks, 'spotify_id': spotify_id,
-    #'track_nxtoffset' : next_offset, 'track_prvoffset' : prev_offset})
-    #return HttpResponse(str(context))
-
-    #return render(request, 'playlist/index.html', context)
-    #return json.loads(context)
-    # Serializing json  
-    #return json.dumps(context, indent = 4)
+    return JsonResponse(context)

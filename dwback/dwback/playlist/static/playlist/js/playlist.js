@@ -8,30 +8,40 @@
     Return the Tracks for a specified Playlist id
 */
 async function getTracks(playlistid){
-    const response = await fetch(
-        // endpoint url
-        "https://localhost:8000/playlist/spfy-tracks/?playlist_id=".concat(playlistid)  
-    );
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`); // handle errors
+    // endpoint url
+    let url =  "https://localhost:8000/playlist/spfy-tracks/?playlist_id=".concat(playlistid) 
+    try {
+        let response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`); // handle errors
+        }
+        return await response.json(); // response
+
+    } catch (error) {
+        console.log(error);
     }
-    const data = await response.json(); // response
-    return await data.json();
 }
 
 async function renderTracks(playlistid){
     let tracks = await getTracks(playlistid);
+    window.alert(tracks);
     let html = '';
     tracks.forEach(track => {
-        let htmlSegment = `<div class="track">
-                            <img src="${user.profileURL}" >
-                            <h2>${user.firstName} ${user.lastName}</h2>
-                            <div class="email"><a href="email:${user.email}">${user.email}</a></div>
-                        </div>`;
-
+        let htmlSegment = `<a href="https://localhost:8000/playlist/spfy-tracks/?track_id=${track.id}" 
+                            class="list-group-item list-group-item-action">
+                            <div class="row" >
+                                <div class="col-sm-4">
+                                    <img class="img-thumbnail" src="${track.image_url}" alt="${track.name}">
+                                </div>  
+                                <div class="col-sm-8">
+                                    <h6>${track.name}</h6>
+                                    <p>ISCR:${track.external_id}</p>
+                                </div>
+                            </div>
+                        </a>`;
         html += htmlSegment;
     });
 
-    let container = document.querySelector('.container');
+    let container = document.querySelector('#tracks');
     container.innerHTML = html;
 }   
