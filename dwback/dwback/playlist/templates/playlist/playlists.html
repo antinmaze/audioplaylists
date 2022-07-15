@@ -1,5 +1,5 @@
-{% if spotify_id %}
-<ul class="pagination">
+{% if playlists %}
+<ul class="pagination" id="playlists-pagination">
     <li class="page-item"><a class="page-link" 
         href="https://localhost:8000/playlist/spfy-playlists/?spotify_id={{ spotify_id }}&playlist_offset={{ playlist_prvoffset }}">
         Previous</a></li>
@@ -10,10 +10,7 @@
 {% endif %}
 <div class="list-group" id="playlists">
     {% for playlist in playlists %}
-    <a href="javascript:renderTracks('{{ playlist.id }}')" class="list-group-item list-group-item-action">
-        <!--
-    <a href="https://localhost:8000/playlist/spfy-tracks/?playlist_id={{ playlist.id }}" class="list-group-item list-group-item-action">
-    -->
+    <a href="javascript:renderTracks('{{ playlist.id }}', '{{ spotify_id }}')" class="list-group-item list-group-item-action">
         <div class="row" >
             <div class="col-sm-4">
                 <img class="img-thumbnail" src="{{ playlist.image_url }}" alt="{{ playlist.description }}">

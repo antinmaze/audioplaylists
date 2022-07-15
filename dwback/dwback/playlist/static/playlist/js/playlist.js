@@ -15,28 +15,23 @@ async function getTracks(playlistid){
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`); // handle errors
         }
-        return await response.json(); //response
+        return await response.json();
 
     } catch (error) {
         console.log(error);
     }
 }
 
-async function renderTracks(playlistid){
+async function renderTracks(playlistid,  user){
     let data_api = await getTracks(playlistid);
-    console.log(data_api);
-    //data_json = JSON.parse(data_api);
-    //tracks = data_json.tracks
-    //console.log(JSON.parse(JSON.stringify(data_api)))
-    
-    //console.log(data_api)
-    tracks = data_api.tracks;
-    //track = JSON.parse(track);
     let html = '';
-    await tracks.forEach( track_str => {
+    console.log(data_api);        
+    html += await renderTracksPagination(data_api, user);
+
+    await data_api.tracks.forEach( track_str => {
         let track = JSON.parse(track_str);
-        console.log(track.id)
-        let htmlSegment = `<a href="https://localhost:8000/playlist/spfy-tracks/?track_id=${track.id}" 
+        //console.log(track.id)
+        let htmlSegment = `<a href="${track.external_urls}" target="_blank" rel="noopener noreferrer" 
                             class="list-group-item list-group-item-action">
                             <div class="row" >
                                 <div class="col-sm-4">
@@ -50,7 +45,20 @@ async function renderTracks(playlistid){
                         </a>`;
         html += htmlSegment;
     });
-    //window.alert(html);
     let container = document.querySelector("#tracks");
     container.innerHTML = html;
 }   
+
+
+async function renderTracksPagination(data, user){
+    let htmlSegment = 
+        `<ul class="pagination" id="tracks-pagination">
+            <li class="page-item"><a class="page-link" 
+            href="https://localhost:8000/playlist/spfy-tracks/?spotify_id=${user}&track_offset=${data.track_prvoffset}">
+            Previous</a></li>
+            <li class="page-item"><a class="page-link" 
+            href="https://localhost:8000/playlist/spfy-tracks/?spotify_id=${user}&track_offset=${data.track_nxtoffset}">
+            Next</a></li>
+        </ul>`;
+        return htmlSegment;
+}
