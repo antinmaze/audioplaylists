@@ -39,7 +39,8 @@ async function renderTracks(playlistid,  user){
                                 </div>  
                                 <div class="col-sm-8">
                                     <h6>${track.name}</h6>
-                                    <p>ISCR:${track.external_id}</p>
+                                    <h7>${track.artist_name}
+                                    <h8>ISCR:${track.external_id}</h8>
                                 </div>
                             </div>
                         </a>`;

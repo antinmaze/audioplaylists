@@ -92,7 +92,11 @@ def spotifyGetPlaylists(request):
 def getOffsetAndLimit(url):
     return parse_qs(urlparse(url).query)
 
-
+"""
+  "next" : "https://api.spotify.com/v1/users/etanova/playlists?offset=50&limit=50", 
+  "offset" : 0,
+  "previous" : null, 
+  """
 """ ex: /playlist/spfy-tracks/?<playlist_id> """
 def spotifyGetTracks(request):
     #get the spotify user attribute efrom the path ELSE get the user ID from session used during the AUth 
