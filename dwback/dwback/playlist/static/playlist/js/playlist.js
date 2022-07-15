@@ -15,7 +15,7 @@ async function getTracks(playlistid){
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`); // handle errors
         }
-        return await response.json(); // response
+        return await response.json(); //response
 
     } catch (error) {
         console.log(error);
@@ -23,10 +23,19 @@ async function getTracks(playlistid){
 }
 
 async function renderTracks(playlistid){
-    let tracks = await getTracks(playlistid);
-    window.alert(tracks);
+    let data_api = await getTracks(playlistid);
+    console.log(data_api);
+    //data_json = JSON.parse(data_api);
+    //tracks = data_json.tracks
+    //console.log(JSON.parse(JSON.stringify(data_api)))
+    
+    //console.log(data_api)
+    tracks = data_api.tracks;
+    //track = JSON.parse(track);
     let html = '';
-    tracks.forEach(track => {
+    await tracks.forEach( track_str => {
+        let track = JSON.parse(track_str);
+        console.log(track.id)
         let htmlSegment = `<a href="https://localhost:8000/playlist/spfy-tracks/?track_id=${track.id}" 
                             class="list-group-item list-group-item-action">
                             <div class="row" >
@@ -41,7 +50,7 @@ async function renderTracks(playlistid){
                         </a>`;
         html += htmlSegment;
     });
-
-    let container = document.querySelector('#tracks');
+    //window.alert(html);
+    let container = document.querySelector("#tracks");
     container.innerHTML = html;
 }   

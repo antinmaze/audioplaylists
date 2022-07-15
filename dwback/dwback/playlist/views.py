@@ -135,8 +135,8 @@ def spotifyGetTracks(request):
             item['track']['album']['images'][0]['url'] #image_url
         ))
     tracks_json = [json.dumps(track.__dict__) for track in tracks]
-    
+
     context = {}
-    context.update({'tracks': tracks_json,
-    'track_nxtoffset' : next_offset, 'track_prvoffset' : prev_offset})
+    #context.update({'tracks': tracks_json})
+    context.update({'tracks': tracks_json,'track_nxtoffset' : next_offset, 'track_prvoffset' : prev_offset})
     return JsonResponse(context)
